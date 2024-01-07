@@ -310,7 +310,20 @@
 				ng-model="invoiceModel.comments" 
 				class="form-control col-sm-2" style="width: auto;">
 		</div>
-		
+		<div class="form-group row"
+			 ng-if="!isDisabled && invoiceModel.purchaseItems.length > 0">
+			<label for="productType" class="col-sm-2">Created By:</label>   <select
+			ng-model="invoiceModel.createdBy" class="form-control col-sm-2"
+			style="width: 20%;" ng-options="staff for staff in staffList"
+			></select>
+		</div>
+		<div class="form-group row"
+			 ng-if="!isDisabled && invoiceModel.purchaseItems.length > 0">
+			<label for="productType" class="col-sm-2">Payment Mode:</label>   <select
+				ng-model="invoiceModel.paymentMode" class="form-control col-sm-2"
+				style="width: 20%;" ng-options="paymentMode for paymentMode in paymentModeList"
+				></select>
+		</div>
 		<button ng-if="!isDisabled && invoiceModel.purchaseItems.length > 0"
 			id="editOrderBtn" type="button" class="btn btn btn-primary col-sm-1"
 			style="width: auto" ;

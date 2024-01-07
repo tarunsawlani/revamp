@@ -20,7 +20,6 @@ import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 
 import com.amaropticals.model.CreateInvoiceRequest;
 
@@ -30,10 +29,8 @@ public class PDFUtils {
 	private static final FopFactory fopFactory = FopFactory.newInstance(new File("./pdf.xconf").toURI());
 	private static final TransformerFactory factory = TransformerFactory.newInstance();
 
-	@Value("${amaropticals.xsl.path.invoice}")
-	private String invoiceXsl;
 
-	public byte[] convertToPDF(CreateInvoiceRequest model) throws IOException, FOPException, TransformerException {
+	public byte[] convertToPDF(CreateInvoiceRequest model, String invoiceXsl) throws IOException, FOPException, TransformerException {
 
 		JAXBContext jaxbContext;
 		ByteArrayOutputStream sw = new ByteArrayOutputStream();
@@ -70,7 +67,7 @@ public class PDFUtils {
 
 			// Setup XSLT
 			LOGGER.info("File path:" + invoiceXsl + "invoice.xsl");
-			File xsltFile = new File("/home/amaropti/amaropticals/xsl/invoice.xsl");
+			File xsltFile = new File("/home/amaropti/aj/xsl/invoice.xsl");
 			LOGGER.info("File exists:" + xsltFile.exists());
 
 			Transformer transformer = factory.newTransformer(new StreamSource(xsltFile));

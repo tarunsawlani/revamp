@@ -32,7 +32,9 @@ public class CreateInvoiceRequest extends CommonResponseModel {
 		this.jsonFileName = jsonFileName;
 	}
 	private List<ItemModel> purchaseItems;
-	
+	private String createdBy;
+	private String paymentMode;
+
 	@XmlElement(name="invoiceid")
 	public long getInvoiceId() {
 		return invoiceId;
@@ -132,6 +134,23 @@ public class CreateInvoiceRequest extends CommonResponseModel {
 	}
 	public void setWithoutDetailsInvoice(boolean withoutDetailsInvoice) {
 		this.withoutDetailsInvoice = withoutDetailsInvoice;
+	}
+
+	@XmlElement(name="createdby")
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	@XmlElement(name="paymentmode")
+	public String getPaymentMode() {
+		return paymentMode;
+	}
+
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
 	}
 	
 	

@@ -31,7 +31,7 @@ import com.sun.istack.ByteArrayDataSource;
 public class MailUtils {
 	private final static Logger LOGGER = LoggerFactory.getLogger(MailUtils.class);
 
-	private static final String host = "host7.dns2dns.com";
+	private static final String host = "host12.dns2dns.com";
 	private static final String user = "admin@amaropticals.in";// change accordingly
 	private static final String password = "$Rajeshnisha8$";// change accordingly
 
@@ -107,7 +107,7 @@ public class MailUtils {
 				// 5) create Multipart object and add MimeBodyPart objects to this object
 
 				multipart.addBodyPart(messageBodyPart1);
-				multipart.addBodyPart(createPdfAttachment(createInvoiceRequest));
+				multipart.addBodyPart(createPdfAttachment(createInvoiceRequest, (String)request[2]));
 			} else if (request[0] instanceof ReportModel) {
 
 				ReportModel reportModel = (ReportModel) request[0];
@@ -146,14 +146,14 @@ public class MailUtils {
 		}
 	}
 
-	private static MimeBodyPart createPdfAttachment(CreateInvoiceRequest createInvoiceRequest)
+	private static MimeBodyPart createPdfAttachment(CreateInvoiceRequest createInvoiceRequest, String invoiceXsl)
 			throws MessagingException, FOPException, IOException, TransformerException {
 
 		String filename = createInvoiceRequest.getInvoiceId() + ".pdf";// change accordingly
 		PDFUtils pdfUtils = new PDFUtils();
 		DataSource source = null;
 
-		source = new ByteArrayDataSource(pdfUtils.convertToPDF(createInvoiceRequest), "application/pdf");
+		source = new ByteArrayDataSource(pdfUtils.convertToPDF(createInvoiceRequest,invoiceXsl), "application/pdf");
 		MimeBodyPart messageBodyPart2 = new MimeBodyPart();
 		messageBodyPart2.setDataHandler(new DataHandler(source));
 		messageBodyPart2.setFileName(filename);

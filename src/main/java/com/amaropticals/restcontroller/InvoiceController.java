@@ -63,6 +63,9 @@ public class InvoiceController {
 	@Value("${amaropticals.invoices.path}")
 	private String invoicePath;
 
+	@Value("${amaropticals.xsl.path.invoice}")
+	private String invoiceXsl;
+
 	@RequestMapping(value = "/createInvoice", method = RequestMethod.POST)
 	public ResponseEntity<CreateInvoiceResponse> createInvoice(HttpServletRequest request,
 			@RequestBody CreateInvoiceRequest invoiceRequest) {
@@ -101,7 +104,8 @@ public class InvoiceController {
 
 		if (StringUtils.isNotBlank(invoiceRequest.getEmail())) {
 			MailUtils.sendMail(invoiceRequest.getEmail(),
-					"Your purchase at Amar Opticals Invoice Id:" + invoiceRequest.getInvoiceId(), invoiceRequest);
+					"Your purchase at Amar Opticals Invoice Id:" + invoiceRequest.getInvoiceId(),
+					invoiceRequest, invoiceXsl);
 		}
 
 		response.setResponse(invoiceRequest);
@@ -160,7 +164,7 @@ public class InvoiceController {
 		CreateInvoiceRequest model = getModelInvoice(invoiceId);
 		LOGGER.info("Read model from json file, invoiceId={}", model.getInvoiceId());
 		PDFUtils utils = new PDFUtils();
-		byte[] out = utils.convertToPDF(model);
+		byte[] out = utils.convertToPDF(model, invoiceXsl);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
 		headers.add("Access-Control-Allow-Origin", "*");
