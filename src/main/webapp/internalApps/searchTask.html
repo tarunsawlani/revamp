@@ -85,10 +85,9 @@
 																				  ng-options="task for task in taskStatusList" required ng-disabled="isDisabled" ></select>
 
 			<label for="productId" class="col-sm-1">Updated By:</label>
-			<select
-					ng-model="taskModel.updatedBy" class="form-control col-sm-2"
-					style="width: 20%;" ng-options="staff for staff in staffList"
-			></select>
+			<input type="text"
+				   ng-model="taskModel.updatedBy"
+				   class="form-control col-sm-2" style="width: auto;">
 			<label for="productId" class="col-sm-1">Payment Mode:</label>
 			<select
 					ng-model="taskModel.paymentMode" class="form-control col-sm-2"
