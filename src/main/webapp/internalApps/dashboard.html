@@ -208,26 +208,15 @@
 <script>
 	mainApp.controller('AddInvoiceController', function($scope, $http, $localstorage, $location, $rootScope) {
        $scope.withoutDetailsInvoice = false;
-           $scope.staffList = [];
-           $scope.staffList.push("Ankit");
-           $scope.staffList.push("Hemlal");
-           $scope.staffList.push("Asif");
-             $scope.paymentModeList = [];
-               $scope.paymentModeList.push("UPI");
-               $scope.paymentModeList.push("Cash");
-                $scope.paymentModeList.push("Card");
-                 $scope.paymentModeList.push("Other");
        $scope.invoiceModel = {
                 name: null,
                 contact: null,
-                cmail: null,
+                email: null,
                 totalAmount: 0,
                 pendingAmount: null,
                 initialAmount: null,
                 referredBy : null,
                 deliveryDate : null,
-  	            createdBy : null,
-  	            paymentMode : null,
                 purchaseItems: []
             };
 
@@ -711,21 +700,9 @@ $scope.datePicker = {
     mainApp.controller('TaskController', function($scope, $http, $localstorage) {
         $scope.isDisabled = false;
 
-         $scope.isDisabled = false;
-             $scope.staffList = [];
-           $scope.staffList.push("Ankit");
-           $scope.staffList.push("Hemlal");
-           $scope.staffList.push("Asif");
-             $scope.paymentModeList = [];
-               $scope.paymentModeList.push("UPI");
-               $scope.paymentModeList.push("Cash");
-                $scope.paymentModeList.push("Card");
-                 $scope.paymentModeList.push("Other");
-
         $scope.taskModel = {};
 
         $scope.taskStatusList = ['IN PROGRESS', 'READY FOR PICKUP', 'DELIVERED'];
-
 
 
 

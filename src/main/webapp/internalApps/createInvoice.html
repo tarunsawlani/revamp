@@ -8,6 +8,26 @@
 		<h1 ng-if="isDisabled">Invoice Details</h1>
 	</div>
 
+	<label for="customerContact" class="col-sm-1">Customer
+		Contact:</label> <input type="tel" class="form-control col-sm-2"
+								style="width: 20%;" placeholder="Customer Contact"
+								name="customerContact" id="customerContact"
+								data-validation="length alphanumeric"
+								ng-model="invoiceModel.contact" ng-disabled="isDisabled" required
+								ng-pattern="/^[0-9]*$/" ng-minlength="10" ng-maxlength="10" ng-blur="findCustomer(invoiceModel.contact)"/>
+	<label for="customerName" class="col-sm-1">Customer Name:</label> <input
+		type="text" class="form-control col-sm-2" style="width: 20%;"
+		placeholder="Customer Name" name="customerName" id="customerName"
+		data-validation="length alphanumeric" ng-model="invoiceModel.name"
+		ng-disabled="isDisabled" required ng-pattern="/^[a-zA-Z. ]*$/">
+
+	<label
+			for="customerEmail" class="col-sm-1">Customer Email:</label> <input
+		type="text" class="form-control col-sm-2" style="width: 20%;"
+		placeholder="Customer Email" name="customerEmail" id="customerEmail"
+		data-validation="length alphanumeric" ng-model="invoiceModel.email"
+		ng-disabled="isDisabled">
+
 
 
 
@@ -61,18 +81,20 @@
 
 		<label for="lensProduct" class="col-sm-1">Lens Name:</label> <input
 			type="text" class="form-control col-sm-2" style="width: 20%;"
-			placeholder="Lens Name" name="lensType"
-			ng-model="lensModel.productName" />
+			placeholder="Lens Name" name="hhhh"
+			ng-model="lensModel.productName"
+			data-validation="length alphanumeric"
+			 required />
 
 		<table class="table table-striped">
 			<thead>
-				<tr>
-					<th>Vision</th>
-					<th colspan="3" >Right Eye</th>
-					<th colspan="3" >Left Eye</th>
+			<tr>
+				<th>Vision</th>
+				<th colspan="3" >Right Eye</th>
+				<th colspan="3" >Left Eye</th>
 
 
-				</tr>
+			</tr>
 			</thead>
 
 
@@ -91,45 +113,45 @@
 			</tr>
 			<tr>
 				<td>D.V.</td>
-				<td><input type="text" class="form-control col-sm-1"
-					style="width: auto;" placeholder="Right Spherical" name="lensType"
-					ng-model="lensModel.rightEye[0].sph" /></td>
-				<td><input type="text" class="form-control col-sm-1"
-					style="width: auto;" placeholder="Right Cylindrical" name="lensType"
-					ng-model="lensModel.rightEye[0].cyl" /></td>
-				<td><input type="text" class="form-control col-sm-1"
-					style="width: auto;" placeholder="Right Axial" name="lensType"
-					ng-model="lensModel.rightEye[0].axial" /></td>
-					<td><input type="text" class="form-control col-sm-1"
-					style="width: auto;" placeholder="Left Spherical" name="lensType"
-					ng-model="lensModel.leftEye[0].sph" /></td>
-				<td><input type="text" class="form-control col-sm-1"
-					style="width: auto;" placeholder="Left Cylindrical" name="lensType"
-					ng-model="lensModel.leftEye[0].cyl" /></td>
-				<td><input type="text" class="form-control col-sm-1"
-					style="width: auto;" placeholder="Left Axial" name="lensType"
-					ng-model="lensModel.leftEye[0].axial" /></td>
+				<td><input type="tel" class="form-control col-sm-1"
+						   style="width: auto;" placeholder="Right Spherical" name="lensType required "
+						   ng-model="lensModel.rightEye[0].sph" /></td>
+				<td><input type="tel" class="form-control col-sm-1"
+						   style="width: auto;" placeholder="Right Cylindrical" name="lensType"
+						   ng-model="lensModel.rightEye[0].cyl" /></td>
+				<td><input type="tel" class="form-control col-sm-1"
+						   style="width: auto;" placeholder="Right Axial" name="lensType"
+						   ng-model="lensModel.rightEye[0].axial" /></td>
+				<td><input type="tel" class="form-control col-sm-1"
+						   style="width: auto;" placeholder="Left Spherical" name="lensType"
+						   ng-model="lensModel.leftEye[0].sph" /></td>
+				<td><input type="tel" class="form-control col-sm-1"
+						   style="width: auto;" placeholder="Left Cylindrical" name="lensType"
+						   ng-model="lensModel.leftEye[0].cyl" /></td>
+				<td><input type="tel" class="form-control col-sm-1"
+						   style="width: auto;" placeholder="Left Axial" name="lensType"
+						   ng-model="lensModel.leftEye[0].axial" /></td>
 			</tr>
 			<tr>
 				<td>Near Add</td>
-					<td><input type="text" class="form-control col-sm-1"
-					style="width: auto;" placeholder="Right Spherical" name="lensType"
-					ng-model="lensModel.rightEye[1].sph" /></td>
+				<td><input type="tel" class="form-control col-sm-1"
+						   style="width: auto;" placeholder="Right Spherical" name="lensType"
+						   ng-model="lensModel.rightEye[1].sph" /></td>
 				<td><input type="text" class="form-control col-sm-1"
-					style="width: auto;" placeholder="Right Cylindrical" name="lensType"
-					ng-model="lensModel.rightEye[1].cyl" /></td>
+						   style="width: auto;" placeholder="Right Cylindrical" name="lensType"
+						   ng-model="lensModel.rightEye[1].cyl" /></td>
 				<td><input type="text" class="form-control col-sm-1"
-					style="width: auto;" placeholder="Right Axial" name="lensType"
-					ng-model="lensModel.rightEye[1].axial" /></td>
-					<td><input type="text" class="form-control col-sm-1"
-					style="width: auto;" placeholder="Left Spherical" name="lensType"
-					ng-model="lensModel.leftEye[1].sph" /></td>
+						   style="width: auto;" placeholder="Right Axial" name="lensType"
+						   ng-model="lensModel.rightEye[1].axial" /></td>
+				<td><input type="tel" class="form-control col-sm-1"
+						   style="width: auto;" placeholder="Left Spherical" name="lensType"
+						   ng-model="lensModel.leftEye[1].sph" /></td>
 				<td><input type="text" class="form-control col-sm-1"
-					style="width: auto;" placeholder="Left Cylindrical" name="lensType"
-					ng-model="lensModel.leftEye[1].cyl" /></td>
+						   style="width: auto;" placeholder="Left Cylindrical" name="lensType"
+						   ng-model="lensModel.leftEye[1].cyl" /></td>
 				<td><input type="text" class="form-control col-sm-1"
-					style="width: auto;" placeholder="Left Axial" name="lensType"
-					ng-model="lensModel.leftEye[1].axial" /></td>
+						   style="width: auto;" placeholder="Left Axial" name="lensType"
+						   ng-model="lensModel.leftEye[1].axial" /></td>
 
 
 			</tr>
@@ -137,8 +159,8 @@
 
 		</table>
 		<button id="editOrderBtn" type="button"
-			class="btn btn btn-primary col-sm-1" style="width: auto"
-			; font-weight:bold;" ng-click="pushToList(lensModel)">Add</button>
+				class="btn btn btn-primary col-sm-1" style="width: auto"
+				; font-weight:bold;" required ng-click="pushToList(lensModel)">Add</button>
 
 	</div>
 
@@ -161,42 +183,42 @@
 
 
 			<thead>
-				<tr ng-if="invoiceModel.purchaseItems.length > 0">
-					<th>S.No</th>
+			<tr ng-if="invoiceModel.purchaseItems.length > 0">
+				<th>S.No</th>
 
-					<th>Product Name</th>
-					<th>Quantity</th>
-					<th>Unit Price</th>
-					<th>Purchase Code</th>
-					<th>Total Cost</th>
-				</tr>
+				<th>Product Name</th>
+				<th>Quantity</th>
+				<th>Unit Price</th>
+				<th>Purchase Code & Mrp</th>
+				<th>Total Cost</th>
+			</tr>
 			</thead>
 			<tbody>
 
-				<tr ng-repeat="x in invoiceModel.purchaseItems">
+			<tr ng-repeat="x in invoiceModel.purchaseItems">
 
-					<td>{{ $index+1 }}</td>
+				<td>{{ $index+1 }}</td>
 
-					<td ng-if="!x.lensActive">{{ x.productName}}-{{ x.code}}</td>
-					<td ng-if="x.lensActive">{{ x.productName}},
-						DV:{{x.leftEye[0].sph}}/{{x.leftEye[0].cyl}}/{{x.leftEye[0].axial}}//{{x.rightEye[0].sph}}/{{x.rightEye[0].cyl}}/{{x.rightEye[0].axial}}
-						Near
-						Add:{{x.leftEye[1].sph}}/{{x.leftEye[1].cyl}}/{{x.leftEye[1].axial}}//{{x.rightEye[1].sph}}/{{x.rightEye[1].cyl}}/{{x.rightEye[1].axial}}</td>
+				<td required ng-if="!x.lensActive" required >{{ x.productName}}-{{ x.code}}</td>
+				<td ng-if="x.lensActive">{{ x.productName}}/{{ x.lens}},
+					DV:{{x.leftEye[0].sph}}/{{x.leftEye[0].cyl}}/{{x.leftEye[0].axial}}//{{x.rightEye[0].sph}}/{{x.rightEye[0].cyl}}/{{x.rightEye[0].axial}}
+
+					Add:{{x.leftEye[1].sph}}/{{x.leftEye[1].cyl}}/{{x.leftEye[1].axial}}//{{x.rightEye[1].sph}}/{{x.rightEye[1].cyl}}/{{x.rightEye[1].axial}}</td>
 
 
-					<td><input type="text" class="form-control col-sm-1"
-						style="width: auto;" value="" name="customerContact"
-						ng-model="x.buyQuantity" id="customerContact"
-						ng-disabled="isDisabled" required ng-pattern="/^[0-9]*$/" /></td>
-					<td><input type="text" class="form-control col-sm-1"
-						style="width: auto;" value="" name="customerContact"
-						ng-model="x.unitPrice" id="customerContact"
-						ng-disabled="isDisabled" required ng-pattern="/^[0-9]*$/" /></td>
+				<td><input type="text" class="form-control col-sm-1"
+						   style="width: auto;" value="" name="customerContact"
+						   ng-model="x.buyQuantity" id="customerContact"
+						   ng-disabled="isDisabled" required ng-pattern="/^[0-9]*$/" /></td>
+				<td><input type="text" class="form-control col-sm-1"
+						   style="width: auto;" value="" name="customerContact"
+						   ng-model="x.unitPrice" id="customerContact"
+						   ng-disabled="isDisabled" required ng-pattern="/^[0-9]*$/" /></td>
 
 				<td><input type="text" class="form-control col-sm-1"
 						   style="width: auto;" value="" name="purchaseCode"
-						   ng-model="x.purchaseCode" id="purchaseCode"
-						ng-disabled="isDisabled"  /></td>
+						   ng-model="x.purchaseCode" required id="purchaseCode"
+						   ng-disabled="isDisabled" /></td>
 
 
 
@@ -227,7 +249,7 @@
 				ng-model="invoiceModel.totalAmount" data-validation="length numeric"
 				disabled="true" ng-value="{{calculateTotalAmount()}}" /> <label
 				for="initialAmount" class="col-sm-1">Initial Amount:</label> <input
-				type="text" class="form-control col-sm-2" style="width: 20%;"
+				type="tel" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Initial Amount" name="initialAmount" id="initialAmount"
 				ng-model="invoiceModel.initialAmount"
 				data-validation="length numeric" ng-disabled="isDisabled" required
@@ -248,7 +270,7 @@
 
 
 			<label for="customerContact" class="col-sm-1">Customer
-				Contact:</label> <input type="text" class="form-control col-sm-2"
+				Contact:</label> <input type="tel" class="form-control col-sm-2"
 										style="width: 20%;" placeholder="Customer Contact"
 										name="customerContact" id="customerContact"
 										data-validation="length alphanumeric"
@@ -274,7 +296,7 @@
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Referred By" name="referredBy" id="referredBy"
 				data-validation="length alphanumeric"
-				ng-model="invoiceModel.refDr" ng-disabled="isDisabled">
+				ng-model="invoiceModel.refDr" ng-disabled="isDisabled"  ng-required="true" />
 			<label for="deliveryDate" class="col-sm-1">Delivery Date:</label><!--  <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Delivery Date" name="deliveryDate" id="deliveryDate"
