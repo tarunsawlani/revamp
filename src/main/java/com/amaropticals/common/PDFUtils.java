@@ -39,9 +39,7 @@ public class PDFUtils {
 			jaxbContext = JAXBContext.newInstance(CreateInvoiceRequest.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 			jaxbMarshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
-
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
 			jaxbMarshaller.marshal(model, sw);
 			sw.close();
 		} catch (JAXBException e) {
@@ -66,8 +64,8 @@ public class PDFUtils {
 			Fop fop = fopFactory.newFop("application/pdf", out);
 
 			// Setup XSLT
-			LOGGER.info("File path:" + invoiceXsl + "invoice.xsl");
-			File xsltFile = new File("/home/amaropti/aj/xsl/invoice.xsl");
+			LOGGER.info("File path:" + invoiceXsl );
+			File xsltFile = new File(invoiceXsl);
 			LOGGER.info("File exists:" + xsltFile.exists());
 
 			Transformer transformer = factory.newTransformer(new StreamSource(xsltFile));

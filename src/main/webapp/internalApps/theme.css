@@ -2,6 +2,7 @@ body {
   padding-top: 70px;
   padding-bottom: 30px;
    margin-bottom: 60px;
+    background-color: #D6EAF8;
 }
 
 .theme-dropdown .dropdown-menu {
@@ -15,6 +16,7 @@ body {
 }
 
 .theme-showcase .navbar .container {
+
   width: 100%;
 }
 

@@ -31,14 +31,14 @@
 
 		<table class="table table-striped">
 			<thead>
-				<tr ng-if="stocks.length > 0">
-					<th>S.No</th>
+			<tr ng-if="stocks.length > 0">
+				<th>S.No</th>
 
-					<th>Product Code</th>
-					<th>Product Name</th>
+				<th>Product Code</th>
+				<th>Product Name</th>
 
 
-				</tr>
+			</tr>
 			</thead>
 
 			<tr ng-repeat="stock in stocks| filter:{productDesc : productName}">
@@ -47,8 +47,8 @@
 				<td>{{ stock.productDesc }}</td>
 				<td>
 					<button id="editOrderBtn" type="button"
-						class="btn btn btn-primary col-sm-1" style="width: auto"
-						; font-weight:bold;" ng-click="pushToTemp(stock)">Add</button>
+							class="btn btn btn-primary col-sm-1" style="width: auto"
+							; font-weight:bold;" ng-click="pushToTemp(stock)">Add</button>
 				</td>
 
 
@@ -193,23 +193,23 @@
 						ng-model="x.unitPrice" id="customerContact"
 						ng-disabled="isDisabled" required ng-pattern="/^[0-9]*$/" /></td>
 
-					<td><input type="text" class="form-control col-sm-1"
-						style="width: auto;" value="" name="purchaseCode"
-						ng-model="x.purchaseCode" id="purchaseCode"
+				<td><input type="text" class="form-control col-sm-1"
+						   style="width: auto;" value="" name="purchaseCode"
+						   ng-model="x.purchaseCode" id="purchaseCode"
 						ng-disabled="isDisabled"  /></td>
 
 
 
-					<td>{{x.totalCost = x.buyQuantity * x.unitPrice}}</td>
+				<td>{{x.totalCost = x.buyQuantity * x.unitPrice}}</td>
 
 
-					<td ng-if="!isDisabled">
-						<button id="sendSMSBtn" type="button"
+				<td ng-if="!isDisabled">
+					<button id="sendSMSBtn" type="button"
 							class="btn btn btn-danger col-sm-1" style="width: auto"
 							; ng-click="deleteItem(invoiceModel.purchaseItems.indexOf(x))"font-weight:bold;">Delete
-						</button>
-					</td>
-				</tr>
+					</button>
+				</td>
+			</tr>
 
 			</tbody>
 		</table>
@@ -220,7 +220,7 @@
 
 
 		<div class="form-group row"
-			ng-if="invoiceModel.purchaseItems.length > 0">
+			 ng-if="invoiceModel.purchaseItems.length > 0">
 			<label for="totalAmount" class="col-sm-1">Total Amount:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Total Amount" name="totalAmount" id="totalAmount"
@@ -232,36 +232,36 @@
 				ng-model="invoiceModel.initialAmount"
 				data-validation="length numeric" ng-disabled="isDisabled" required
 				ng-pattern="/^[0-9]*$/" /> <label for="pendingAmount"
-				class="col-sm-1">Pending Amount:</label> <input type="text"
-				class="form-control col-sm-2" style="width: 20%;"
-				placeholder="Pending Amount" name="totalAmount" id="pendingAmount"
-				ng-model="invoiceModel.pendingAmount"
-				data-validation="length numeric" disabled="true"
-				ng-value="{{calculatePendingAmount(invoiceModel.initialAmount)}}"
-				disabled="true" />
+												  class="col-sm-1">Pending Amount:</label> <input type="text"
+																								  class="form-control col-sm-2" style="width: 20%;"
+																								  placeholder="Pending Amount" name="totalAmount" id="pendingAmount"
+																								  ng-model="invoiceModel.pendingAmount"
+																								  data-validation="length numeric" disabled="true"
+																								  ng-value="{{calculatePendingAmount(invoiceModel.initialAmount)}}"
+																								  disabled="true" />
 
 		</div>
 
 
 		<div class="form-group row"
-			ng-if="invoiceModel.purchaseItems.length> 0  && !invoiceModel.withoutDetailsInvoice">
+			 ng-if="invoiceModel.purchaseItems.length> 0  && !invoiceModel.withoutDetailsInvoice">
 
-	
+
 			<label for="customerContact" class="col-sm-1">Customer
 				Contact:</label> <input type="text" class="form-control col-sm-2"
-				style="width: 20%;" placeholder="Customer Contact"
-				name="customerContact" id="customerContact"
-				data-validation="length alphanumeric"
-				ng-model="invoiceModel.contact" ng-disabled="isDisabled" required
-				ng-pattern="/^[0-9]*$/" ng-minlength="10" ng-maxlength="10" ng-blur="findCustomer(invoiceModel.contact)"/> 
-				<label for="customerName" class="col-sm-1">Customer Name:</label> <input
+										style="width: 20%;" placeholder="Customer Contact"
+										name="customerContact" id="customerContact"
+										data-validation="length alphanumeric"
+										ng-model="invoiceModel.contact" ng-disabled="isDisabled" required
+										ng-pattern="/^[0-9]*$/" ng-minlength="10" ng-maxlength="10" ng-blur="findCustomer(invoiceModel.contact)"/>
+			<label for="customerName" class="col-sm-1">Customer Name:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Customer Name" name="customerName" id="customerName"
 				data-validation="length alphanumeric" ng-model="invoiceModel.name"
 				ng-disabled="isDisabled" required ng-pattern="/^[a-zA-Z. ]*$/">
-				
-				<label
-				for="customerEmail" class="col-sm-1">Customer Email:</label> <input
+
+			<label
+					for="customerEmail" class="col-sm-1">Customer Email:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Customer Email" name="customerEmail" id="customerEmail"
 				data-validation="length alphanumeric" ng-model="invoiceModel.email"
@@ -269,7 +269,7 @@
 
 		</div>
 		<div class="form-group row"
-			ng-if="invoiceModel.purchaseItems.length > 0 && !invoiceModel.withoutDetailsInvoice" >
+			 ng-if="invoiceModel.purchaseItems.length > 0 && !invoiceModel.withoutDetailsInvoice" >
 			<label for="referredBy" class="col-sm-1">Referred by:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Referred By" name="referredBy" id="referredBy"
@@ -281,33 +281,33 @@
 				data-validation="length alphanumeric"
 				ng-model="invoiceModel.deliveryDate" ng-disabled="isDisabled"
 				required /> -->
-				<div class="col-sm-2">
-				 	  <p class="input-group">
-              <input type="text" class="form-control"  ng-change="adjustTimeZone()" datepicker-popup="yyyy-MM-dd" ng-model="invoiceModel.deliveryDate" is-open="datePicker.opened" min-date="minDate"  datepicker-options="dateOptions" ng-disabled="isDisabled" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
+			<div class="col-sm-2">
+				<p class="input-group">
+					<input type="text" class="form-control"  ng-change="adjustTimeZone()" datepicker-popup="yyyy-MM-dd" ng-model="invoiceModel.deliveryDate" is-open="datePicker.opened" min-date="minDate"  datepicker-options="dateOptions" ng-disabled="isDisabled" ng-required="true" close-text="Close" />
+					<span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-disabled="isDisabled" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
-            </p> 
-            </div>
-          
-       
+				</p>
+			</div>
+
+
 
 		</div>
-		
-		 
 
-<div class="form-group row"
-			ng-if="!isDisabled && invoiceModel.purchaseItems.length > 0">
+
+
+		<div class="form-group row"
+			 ng-if="!isDisabled && invoiceModel.purchaseItems.length > 0">
 			<label for="productType" class="col-sm-2">Customer Details
 				Not Required:</label> <input type="checkbox"
-				ng-model="invoiceModel.withoutDetailsInvoice" 
-				class="form-control col-sm-2" style="width: 20%;">
+											 ng-model="invoiceModel.withoutDetailsInvoice"
+											 class="form-control col-sm-2" style="width: 20%;">
 		</div>
-		
+
 		<div class="form-group row"
-			ng-if="!isDisabled && invoiceModel.purchaseItems.length > 0">
+			 ng-if="!isDisabled && invoiceModel.purchaseItems.length > 0">
 			<label for="productType" class="col-sm-2">Comments:</label> <input type="text"
-				ng-model="invoiceModel.comments" 
+																			   ng-model="invoiceModel.comments"
 				class="form-control col-sm-2" style="width: auto;">
 		</div>
 		<div class="form-group row"
@@ -324,21 +324,25 @@
 				style="width: 20%;" ng-options="paymentMode for paymentMode in paymentModeList"
 				></select>
 		</div>
+
 		<button ng-if="!isDisabled && invoiceModel.purchaseItems.length > 0"
-			id="editOrderBtn" type="button" class="btn btn btn-primary col-sm-1"
-			style="width: auto" ;
-   ng-click="createInvoice(invoiceModel)"
-			ng-disabled="createInvoiceForm.$invalid"font-weight:bold;">Create
-			Invoice</button>
-			
-			<button ng-if="isDisabled" type="button" class="btn btn btn-primary col-sm-1"
-			style="width: auto" ;
-   ng-click="downloadInvoice(invoiceModel.invoiceId)"
-			font-weight:bold;">Download
-			Invoice</button>
-			<br/>
+				id="editOrderBtn" type="button" class="btn btn btn-primary col-sm-1"
+				style="width: auto" ;
+				ng-click="createInvoice(invoiceModel)"
+				ng-disabled="createInvoiceForm.$invalid"font-weight:bold;">Create
+		Invoice</button>
+
+
+		<button ng-if="isDisabled" type="button" class="btn btn btn-primary col-sm-1"
+				style="width: auto" ;
+				ng-click="downloadInvoice(invoiceModel.invoiceId)"
+				font-weight:bold;">Download
+		Invoice</button>
+		<br/>
+
 		<a ng-if="isDisabled" href="#createInvoice.html">Back To Home</a>
-		
 	</form>
+
+	<a href="https://api.whatsapp.com/send?phone=%2B91{{invoiceModel.contact}}&&text=अमर%20ओप्टिकल्स%20से%20ख़रीदी%20करने%20के%20लिए%20आपका%20धन्यवाद%20%20हमें%20उम्मीद%20है%20आपको%20हमारी%20सुविधाएँ%20पसंद%20आयी%20होगी%20आगे%20के%20offer%20व%20update%20के%20लिए%20कृपया%20यह%20नंबर%20save%20करें%20Thank%20you%20for%20choosing%20AMAR%20OPTICALS%20Korba%20hope%20you%20enjoy%20the%20services%20for%20new%20offer%20and%20update%20kindly%20save%20this%20number">Whatsapp status</a>
 
 </div>

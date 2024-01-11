@@ -4,7 +4,7 @@
 	<div class="page-header">
 		<h1 ng-if="!isDisabled">Update Tasks</h1>
 	</div>
-<div class="page-header">
+	<div class="page-header">
 		<h1 ng-if="isDisabled">Update Tasks Details</h1>
 	</div>
 
@@ -12,86 +12,117 @@
 
 
 
-			<div class="form-group row" ng-if="!isDisabled" >
-		
-			<label for="productType" class="col-sm-1" >Task Id:</label> 
-			</label> <input
-				type="text"  class="form-control col-sm-2"
-				style="width: 20%;" placeholder="Task Id" ng-model="searchModel.taskId">	
-		
-				
-				
-				 <label
-				for="productName" class="col-sm-1">Task Status:</label><select ng-model="searchModel.taskStatus" 
-				 class="form-control col-sm-2" style="width: 20%;"
-				 ng-options="task for task in taskStatusList"></select>
-				 
-				 <button ng-if="!isDisabled" id="editOrderBtn" type="button" class="btn btn btn-primary col-sm-1" style="width:auto";
-   ng-click="searchTask(searchModel)"
-   font-weight:bold;">Search Task</button>
-				</div class="form-group row" ng-if="!isDisabled">
-				<div>
+	<div class="form-group row" ng-if="!isDisabled" >
+
+		<label for="productType" class="col-sm-1" >Task Id:</label>
+		</label> <input
+			type="text"  class="form-control col-sm-2"
+			style="width: 20%;" placeholder="Task Id" ng-model="searchModel.taskId">
 
 
-			<table class="table table-striped">
-				<thead>
-					<tr ng-if="taskList.length > 0">
-						<th>S.No</th>
-						
-						<th>Task Details</th>
-						<th>Task Status</th>
 
-					</tr>
-				</thead>
+		<label
+				for="productName" class="col-sm-1">Task Status:</label><select ng-model="searchModel.taskStatus"
+																			   class="form-control col-sm-2" style="width: 20%;"
+																			   ng-options="task for task in taskStatusList"></select>
 
-				<tr ng-repeat="task in taskList | orderBy : 'taskId'">
-					<td>{{ $index+1 }}</td>
-					<td>{{ task.taskId }}-{{ task.name}}-{{task.deliveryDate}}
-					</td>
-					<td>	<select ng-model="task.taskStatus" 
-				 class="form-control col-sm-2" style="width: auto;"
-				 ng-options="task for task in taskStatusList" required ng-change="updateTask(task, false)" ></select>
-			</td>
-						<td>
-						<button id="editOrderBtn" type="button"
+		<button ng-if="!isDisabled" id="editOrderBtn" type="button" class="btn btn btn-primary col-sm-1" style="width:auto";
+				ng-click="searchTask(searchModel)"
+				font-weight:bold;">Search Task</button>
+
+	</div class="form-group row" ng-if="!isDisabled">
+	<div>
+
+
+		<table class="table table-striped">
+			<thead>
+			<tr ng-if="taskList.length > 0">
+				<th>S.No</th>
+
+				<th>Task Details</th>
+				<th>Task Status</th>
+
+			</tr>
+			</thead>
+
+			<tr ng-repeat="task in taskList | orderBy : 'taskId'">
+				<td>{{ $index+1 }}</td>
+				<td>{{ task.taskId }}-{{ task.name}}-{{task.deliveryDate}}
+				</td>
+				<td>	<select ng-model="task.taskStatus"
+								class="form-control col-sm-2" style="width: auto;"
+								ng-options="task for task in taskStatusList" required ng-change="updateTask(task, false)" ></select>
+				</td>
+				<td>
+					<button id="editOrderBtn" type="button"
 							class="btn btn btn-primary col-sm-1" style="width: auto"; font-weight:bold;" ng-click="pushToEdit(task)">Edit</button>
-					</td>
-					
+				</td>
 
-				</tr>
-			</table>
-		</div>
-		
-	
-<form name="updateTaskForm" autocomplete="off" novalidate>
+				<td>
+
+					<button ng-if="!isDisabled" id="editOrderBtn" type="button" class="btn btn btn-primary col-sm-1" style="width:auto";
+							ng-click="openWhatsapp(task)"
+							font-weight:bold;">WA</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+
+
+	<form name="updateTaskForm" autocomplete="off" novalidate>
 
 		<div class="form-group row" >
 
-			<label for="productId" class="col-sm-1">Task Id:</label> 
-			 <input
-				type="text" class="form-control col-sm-2" style="width: 20%;"
-				placeholder="Product Sub Type" name="productSubType"
-				id="productSubType" data-validation="length alphanumeric" ng-model="taskModel.taskId" ng-disabled="true"
+			<label for="productId" class="col-sm-1">Task Id:</label>
+			<input
+					type="text" class="form-control col-sm-2" style="width: 20%;"
+					placeholder="Product Sub Type" name="productSubType"
+					id="productSubType" data-validation="length alphanumeric" ng-model="taskModel.taskId" ng-disabled="true"
 					required/>
-				<label for="productType" class="col-sm-1">Task Status:</label><select ng-model="taskModel.taskStatus" 
-				 class="form-control col-sm-2" style="width: 20%;"
-				 ng-options="task for task in taskStatusList" required ng-disabled="isDisabled" ></select>
+			<label for="productType" class="col-sm-1">Task Status:</label><select ng-model="taskModel.taskStatus"
+																				  class="form-control col-sm-2" style="width: 20%;"
+																				  ng-options="task for task in taskStatusList" required ng-disabled="isDisabled" ></select>
+
+			<label for="productId" class="col-sm-1">Updated By:</label>
+			<select
+					ng-model="taskModel.updatedBy" class="form-control col-sm-2"
+					style="width: 20%;" ng-options="staff for staff in staffList"
+			></select>
+			<label for="productId" class="col-sm-1">Payment Mode:</label>
+			<select
+					ng-model="taskModel.paymentMode" class="form-control col-sm-2"
+					style="width: 20%;" ng-options="paymentMode for paymentMode in paymentModeList"
+			></select>
+			<label for="productId" class="col-sm-1">Balance Amount</label>
+			<input
+					type="text" class="form-control col-sm-2" style="width: 20%;"
+					placeholder="Balance Amount" name="productSubType"
+					id="productSubType" data-validation="length alphanumeric" ng-model="taskModel.balanceAmount"
+					required/>
+
+			<label for="productId" class="col-sm-1">Comments</label>
+			<input
+					type="text" class="form-control col-sm-2" style="width: 20%;"
+					placeholder="Balance Amount" name="productSubType"
+					id="productSubType" data-validation="length alphanumeric" ng-model="taskModel.comments"
+					required/>
+
 			<label
-				for="productSubType" class="col-sm-1">Delivery Date:</label> <!-- <input
+					for="productSubType" class="col-sm-1">Delivery Date:</label> <!-- <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Product Sub Type" name="productSubType"
 				id="productSubType" data-validation="length alphanumeric" ng-model="taskModel.deliveryDate" ng-disabled="isDisabled"
-				
+
 			required/> -->
-		
-				   <div class="col-sm-2">
-            <p class="input-group">
-              <input type="text" class="form-control"  uib-datepicker-popup="{{format}}" ng-model="taskModel.deliveryDate" is-open="opened" min-date="minDate"  datepicker-options="dateOptions" ng-disabled="isDisabled" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
+			<div class="col-sm-2">
+				<p class="input-group">
+					<input type="text" class="form-control"  uib-datepicker-popup="{{format}}" ng-model="taskModel.deliveryDate" is-open="opened" min-date="minDate"  datepicker-options="dateOptions" ng-disabled="isDisabled" ng-required="true" close-text="Close" />
+					<span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-disabled="isDisabled" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
-            </p>
-        </div>
+				</p>
+			</div>
 		</div>
 		
 		
@@ -105,4 +136,7 @@
    >Back To Home</a>
 	</form>
 
+</div>
+
+<a href="whatsapp://send?text=Thankyou%20for%20choosing%20AMAR%20OPTICALS%20KORBA%20to%20get%20new%20offer%20save%20this%20number%20your%20order%20is%20ready%20for%20pickup!">ready for pickup</a>
 </div>

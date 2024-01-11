@@ -20,6 +20,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.xml.transform.TransformerException;
 
+import com.amaropticals.model.TransactionModel;
 import org.apache.fop.apps.FOPException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,6 +123,30 @@ public class MailUtils {
 				messageBody.append("\n Total Customers :"+ (String)request[2]);
 				messageBody.append("\n Average Sales per customer :"+ (String)request[3]);
 				
+				BodyPart messageBodyPart1 = new MimeBodyPart();
+				messageBodyPart1.setText(messageBody.toString());
+
+				// 4) create new MimeBodyPart object and set DataHandler object to this object
+
+				// 5) create Multipart object and add MimeBodyPart objects to this object
+
+				multipart.addBodyPart(messageBodyPart1);
+
+			} else if (request[0] instanceof TransactionModel) {
+
+				TransactionModel trxnModel = (TransactionModel) request[0];
+				message.setFrom(new InternetAddress(user));
+				message.addRecipient(Message.RecipientType.TO, new InternetAddress(toAddress));
+				message.setSubject(subject);
+				StringBuilder messageBody = new StringBuilder();
+				messageBody.append("Hello,");
+				messageBody.append("This is transaction details:");
+				messageBody.append("TransactionId:"+ trxnModel.getTransactionId());
+				messageBody.append("TransactionType:"+ trxnModel.getTransactionType());
+				messageBody.append("TotalAmount:"+ trxnModel.getTotalAmount());
+				messageBody.append("BalanceAmount:"+ trxnModel.getBalanceAmount());
+				messageBody.append("DeliveryDate:"+ trxnModel.getDeliveryDate());
+
 				BodyPart messageBodyPart1 = new MimeBodyPart();
 				messageBodyPart1.setText(messageBody.toString());
 

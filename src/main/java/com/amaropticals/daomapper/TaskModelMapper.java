@@ -18,6 +18,10 @@ public class TaskModelMapper implements RowMapper<TaskModel> {
 		model.setUpdateTime(String.valueOf(rs.getTimestamp("update_timestamp")));
 		model.setUser(rs.getString("user"));
 		model.setName(rs.getString("name"));
+        model.setBalanceAmount(Double.toString(rs.getDouble("balance_amount")));
+        model.setUpdatedBy(rs.getString("update_user"));
+        model.setPaymentMode(rs.getString("payment_mode"));
+        model.setComments(rs.getString("comments"));
 		return model;
 	}
 

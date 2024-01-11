@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.transform.TransformerException;
 
+import com.amaropticals.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.fop.apps.FOPException;
 import org.slf4j.Logger;
@@ -36,14 +37,6 @@ import com.amaropticals.common.MailUtils;
 import com.amaropticals.common.PDFUtils;
 import com.amaropticals.dao.GenericDAO;
 import com.amaropticals.filehandling.JSONFileHandler;
-import com.amaropticals.model.AOError;
-import com.amaropticals.model.AddOrUpdateStockRequest;
-import com.amaropticals.model.CreateInvoiceRequest;
-import com.amaropticals.model.CreateInvoiceResponse;
-import com.amaropticals.model.CustomerListResponse;
-import com.amaropticals.model.InvoiceListResponse;
-import com.amaropticals.model.ItemModel;
-import com.amaropticals.model.TaskModel;
 
 @RequestMapping("/invoices")
 @RestController
@@ -65,6 +58,9 @@ public class InvoiceController {
 
 	@Value("${amaropticals.xsl.path.invoice}")
 	private String invoiceXsl;
+
+	@Value("${amaropticals.reports.email}")
+	private String emailAddresses;
 
 	@RequestMapping(value = "/createInvoice", method = RequestMethod.POST)
 	public ResponseEntity<CreateInvoiceResponse> createInvoice(HttpServletRequest request,
@@ -108,6 +104,19 @@ public class InvoiceController {
 					invoiceRequest, invoiceXsl);
 		}
 
+		TransactionModel transactionModel = new TransactionModel();
+		transactionModel.setTransactionType("CREATE_INV");
+		transactionModel.setTransactionId(Long.toString(invoiceRequest.getInvoiceId()));
+		transactionModel.setTotalAmount(invoiceRequest.getTotalAmount());
+		transactionModel.setBalanceAmount(invoiceRequest.getPendingAmount());
+		transactionModel.setDeliveryDate(invoiceRequest.getDeliveryDate());
+		MailUtils.sendMail(emailAddresses,
+				 transactionModel.getTransactionType()
+				+ "Txn-Id:"+ transactionModel.getTransactionId()+
+						"TAmt:"+transactionModel.getTotalAmount() +
+						 "BAmt:" +transactionModel.getBalanceAmount()+
+						 "PM:"+invoiceRequest.getPaymentMode(),
+				transactionModel);
 		response.setResponse(invoiceRequest);
 		return new ResponseEntity<CreateInvoiceResponse>(response, HttpStatus.OK);
 	}
@@ -200,6 +209,7 @@ public class InvoiceController {
 				taskModel.setTaskStatus(AOConstants.TASK_IN_PROGRESS);
 				taskModel.setDeliveryDate(model.getDeliveryDate());
 				taskModel.setUpdateTime(request.getUpdateDate());
+				taskModel.setBalanceAmount(request.getPendingAmount());
 				taskController.createTasks(taskModel);
 
 				count++;
