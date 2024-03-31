@@ -3,6 +3,8 @@ package com.amaropticals.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.amaropticals.daomapper.*;
+import com.amaropticals.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +16,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.amaropticals.common.CommonUtils;
-import com.amaropticals.daomapper.CustomerModelMapper;
-import com.amaropticals.daomapper.InvoiceModelMapper;
-import com.amaropticals.daomapper.StockModelMapper;
-import com.amaropticals.daomapper.TaskModelMapper;
-import com.amaropticals.daomapper.UserModelMapper;
-import com.amaropticals.model.CreateInvoiceRequest;
-import com.amaropticals.model.CustomerModel;
-import com.amaropticals.model.StockModel;
-import com.amaropticals.model.TaskModel;
-import com.amaropticals.model.UserModel;
 
 @Transactional
 @Repository
@@ -46,6 +38,13 @@ public class GenericDAO {
 	public List<TaskModel> findTasks(String sql) {
 
 		List<TaskModel> list = genericJdbcTemplate.query(sql, new TaskModelMapper());
+		return list;
+
+	}
+
+	public List<QueryModel> findQuery(String sql) {
+
+		List<QueryModel> list = genericJdbcTemplate.query(sql, new QueryModelMapper());
 		return list;
 
 	}
@@ -111,6 +110,15 @@ public class GenericDAO {
 		Long invoiceId = genericJdbcTemplate.queryForObject(sql, Long.class);
 		LOGGER.info("Loaded Max Invoice Id={} from DB", invoiceId);
 		CommonUtils.setInvoiceId(invoiceId);
+	}
+
+	@EventListener(ApplicationReadyEvent.class)
+	public void loadMaxQueryIdfromDB() {
+
+		String sql = "SELECT MAX(CAST(SUBSTR(TRIM(query_id), 2) AS UNSIGNED)) FROM opticals_query;";
+		Long queryId = genericJdbcTemplate.queryForObject(sql, Long.class);
+		LOGGER.info("Loaded Max queryId={} from DB", queryId);
+		CommonUtils.setQueryId(queryId);
 	}
 	
 	public SqlRowSet genericQuery(String sql) {

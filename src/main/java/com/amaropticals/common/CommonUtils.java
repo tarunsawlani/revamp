@@ -23,6 +23,7 @@ public class CommonUtils {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(CommonUtils.class);
 	private static long invoiceId;
+	private static long queryId;
 
 	private static long ONE_HOUR_MILLISECONDS = 3600000;
 
@@ -53,6 +54,35 @@ public class CommonUtils {
 
 		LOGGER.info("Next Invoice Id={}", nextInvoiceId);
 		return nextInvoiceId;
+	}
+
+	public static long getNextQueryId() {
+		long nextQueryId;
+
+		Calendar cal = Calendar.getInstance();
+
+		StringBuilder date = new StringBuilder();
+		date.append(String.valueOf(cal.get(1)).substring(2, 4));
+		if (cal.get(2) + 1 < 10) {
+			date.append(0);
+		}
+		date.append(cal.get(2) + 1);
+		if (cal.get(5) < 10) {
+			date.append(0);
+		}
+		date.append(cal.get(5));
+
+		if (Long.parseLong(date.toString() + "00") > queryId) {
+			nextQueryId = Long.parseLong(date.toString() + "01");
+		} else {
+
+			nextQueryId = queryId + 1;
+		}
+
+		queryId = nextQueryId;
+
+		LOGGER.info("Next Query Id={}", nextQueryId);
+		return nextQueryId;
 	}
 
 	public static boolean sendMessages(CreateInvoiceRequest request, String status) {
@@ -120,6 +150,14 @@ public class CommonUtils {
 
 	public static synchronized void setInvoiceId(long invoiceId) {
 		CommonUtils.invoiceId = invoiceId;
+	}
+
+	public static long getQueryId() {
+		return queryId;
+	}
+
+	public static synchronized void setQueryId(long queryId) {
+		CommonUtils.queryId = queryId;
 	}
 
 	public static boolean checkAuthentication(HttpServletRequest request) {

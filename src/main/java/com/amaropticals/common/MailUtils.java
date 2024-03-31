@@ -20,6 +20,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.xml.transform.TransformerException;
 
+import com.amaropticals.model.QueryModel;
 import com.amaropticals.model.TransactionModel;
 import org.apache.fop.apps.FOPException;
 import org.slf4j.Logger;
@@ -146,6 +147,28 @@ public class MailUtils {
 				messageBody.append("TotalAmount:"+ trxnModel.getTotalAmount());
 				messageBody.append("BalanceAmount:"+ trxnModel.getBalanceAmount());
 				messageBody.append("DeliveryDate:"+ trxnModel.getDeliveryDate());
+
+				BodyPart messageBodyPart1 = new MimeBodyPart();
+				messageBodyPart1.setText(messageBody.toString());
+
+				// 4) create new MimeBodyPart object and set DataHandler object to this object
+
+				// 5) create Multipart object and add MimeBodyPart objects to this object
+
+				multipart.addBodyPart(messageBodyPart1);
+
+			} else if(request[0] instanceof QueryModel) {
+
+				QueryModel queryModel = (QueryModel) request[0];
+				message.setFrom(new InternetAddress(user));
+				message.addRecipient(Message.RecipientType.TO, new InternetAddress(toAddress));
+				message.setSubject(subject);
+				StringBuilder messageBody = new StringBuilder();
+				messageBody.append("\nQuery Id:"+ queryModel.getQueryId());
+				messageBody.append("\nwith reason:"+ queryModel.getReason());
+				messageBody.append("\nfor person :"+ queryModel.getName());
+				messageBody.append("\nentered by:"+ queryModel.getCreatedBy());
+				messageBody.append("\n time :"+ queryModel.getUpdateTime());
 
 				BodyPart messageBodyPart1 = new MimeBodyPart();
 				messageBodyPart1.setText(messageBody.toString());

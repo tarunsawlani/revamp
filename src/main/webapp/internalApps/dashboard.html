@@ -84,6 +84,14 @@
 						<li><a href="#/searchTask">Search Task</a></li>
 
 					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+										data-toggle="dropdown" role="button" aria-haspopup="true"
+										aria-expanded="false">Queries<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#/createQuery">Create Query</a></li>
+						<li><a href="#/searchQuery">Search Query</a></li>
+
+					</ul></li>
 
 				<li ng-if="admin" class="dropdown"><a href="#" class="dropdown-toggle"
 													  data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -177,7 +185,14 @@
            templateUrl: 'viewInvoice.html',
            controller: 'ViewInvoiceController'
         }).
-
+ 		when('/createQuery', {
+           templateUrl: 'createQuery.html',
+           controller: 'CreateQueryController'
+        }).
+        when('/searchQuery', {
+           templateUrl: 'searchQuery.html',
+           controller: 'SearchQueryController'
+        }).
        when('/addStock', {
            templateUrl: 'addStock.html',
            controller: 'AddStockController'
@@ -202,6 +217,24 @@
           redirectTo: '/login'
        });
     }]);
+
+	  mainApp.directive('uploadFile',[function() {
+  return {
+    require : 'ngModel',
+    scope : {format: '@', upload : '&upload'},
+    link : function(scope, el, attrs, ngModel) {
+      // change event is fired when file is selected
+      el.bind('change', function(event) {
+        console.log(event.target.files[0]);
+        scope.upload({file:event.target.files[0]});
+        scope.$apply(function() {
+          ngModel.$setViewValue(el.val());
+          ngModel.$render();
+        });
+      })
+    }
+  }
+}]);
 
 </script>
 
@@ -520,6 +553,22 @@ $scope.datePicker = {
 
         };
 
+   $scope.uploadFile = function(element) {
+                console.log("in upload file");
+                $scope.invoiceModel.fileName = element.name;
+                  $scope.invoiceModel.fileType = element.type;
+
+                const file = element
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+       $scope.invoiceModel.imgBase64String = reader.result;
+    };
+                    console.log(element);
+
+
+        };
 
     });
 
@@ -784,7 +833,7 @@ $scope.datePicker = {
 
 
                  window.open("https://api.whatsapp.com/send?phone=%2B91"+
-                 response.contact+"&&text=Dear%20"+response.name+",%20your%20order%20number%20"+response.invoiceId +"%20is%20ready%20for%20pickup%20Thankyou%20for%20choosing%20*AMAR%20OPTICALS%20Korba*%20🙏नमस्कार%20आपका%20ऑर्डर%20पिकअप%20के%20लिए%20तैयार%20है,%20*अमर%20ऑप्टिकल्स%20कोरबा*%20चुनने%20के%20लिए%20धन्यवाद%20🙏Pickup%20time%2012noon-9pm%20Tuesday%20closed");
+                 response.contact+"&&text=Dear%20"+response.name+",%20your%20order%20number%20"+response.invoiceId +"%20is%20ready%20for%20pickup%20Thankyou%20for%20choosing%20*AMAR%20OPTICALS%20Korba*%20ЁЯЩПрдирдорд╕реНрдХрд╛рд░%20рдЖрдкрдХрд╛%20рдСрд░реНрдбрд░%20рдкрд┐рдХрдЕрдк%20рдХреЗ%20рд▓рд┐рдП%20рддреИрдпрд╛рд░%20рд╣реИ,%20*рдЕрдорд░%20рдСрдкреНрдЯрд┐рдХрд▓реНрд╕%20рдХреЛрд░рдмрд╛*%20рдЪреБрдирдиреЗ%20рдХреЗ%20рд▓рд┐рдП%20рдзрдиреНрдпрд╡рд╛рдж%20ЁЯЩПPickup%20time%2012noon-9pm%20Tuesday%20closed");
 
 
                        }).error(function(error, status){
@@ -1045,7 +1094,127 @@ mainApp.controller('ReportsController', function ($scope, $http, $localstorage) 
     };
 
 
+
+
 });
+
+mainApp.controller('CreateQueryController', function($scope, $http, $localstorage, $location, $rootScope) {
+
+
+       $scope.queryModel = {
+                name: null,
+                contact: null,
+                reason: null,
+                createdBy: null,
+                queryId:null
+
+
+
+            };
+
+
+      $scope.isDisabled = false;
+
+      $scope.backToHome= function() {
+
+          $http.get("/#/createQuery");
+      };
+
+$scope.createQuery = function(queryModel) {
+
+          $http({method : "POST",
+                   url :"/queries/createQuery",
+                   data : queryModel,
+
+                   headers : {
+                    'Content-Type' : 'application/json',
+                    'token' :$localstorage.get("token", "")
+                   }
+                   }
+                   ).success(function (response) {
+                     if (response.error != null) {
+                          $localstorage.set("token", "");
+                          $rootScope.name = '';
+                          $rootScope.authenicated = false;
+
+                          $rootScope.isError= true;
+                          $rootScope.errorCode=
+                                  response.error.errorCode;
+                          $rootScope.errorMessage=
+                              response.error.errorMessage;
+
+
+                      } else {
+                          $scope.isDisabled = true;
+                            $scope.queryModel = response;
+
+                      }
+
+
+                   }).error(function(error, status){
+                     $rootScope.systemError = true;
+
+                        //   $('#errorMsg').show();
+                   });
+      };
+
+
+
+
+         $scope.clear = function () {
+           $scope.invoiceModel.deliveryDate = null;
+         };
+
+
+         $scope.adjustTimeZone= function() {
+       //	console.log($scope.invoiceModel.deliveryDate);
+           var targetTime = $scope.invoiceModel.deliveryDate;
+
+
+       var   month = '' + (targetTime.getMonth() + 1),
+         day = '' + targetTime.getDate(),
+         year = targetTime.getFullYear();
+
+     if (month.length < 2) month = '0' + month;
+     if (day.length < 2) day = '0' + day;
+
+     $scope.invoiceModel.deliveryDate = [year, month, day].join('-')
+
+            };
+
+
+          $scope.toggleMin = function() {
+           $scope.minDate = $scope.minDate ? null : new Date();
+       //    console.log($scope.minDate);
+         };
+         $scope.toggleMin();
+       //  $scope.minDate = null;
+
+
+$scope.datePicker = {
+       opened:false
+      }
+
+         $scope.open = function($event, elementOpened) {
+
+           $event.preventDefault();
+           $event.stopPropagation();
+
+
+          $scope.datePicker.opened = true;
+
+
+         };
+
+         $scope.dateOptions = {
+           formatYear: 'yy',
+           startingDay: 1
+         };
+
+
+
+    });
+
 
 
 </script>
@@ -1133,6 +1302,8 @@ mainApp.controller('ReportsController', function ($scope, $http, $localstorage) 
            });
 
        });
+
+
 
        mainApp.factory('$localstorage', [ '$window', function($window) {
            return {

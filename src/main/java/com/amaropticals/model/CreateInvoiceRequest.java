@@ -35,6 +35,34 @@ public class CreateInvoiceRequest extends CommonResponseModel {
 	private String createdBy;
 	private String paymentMode;
 
+	private String fileName;
+	private String fileType;
+	private String imgBase64String;
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	public String getImgBase64String() {
+		return imgBase64String;
+	}
+
+	public void setImgBase64String(String imgBase64String) {
+		this.imgBase64String = imgBase64String;
+	}
+
 	@XmlElement(name="invoiceid")
 	public long getInvoiceId() {
 		return invoiceId;

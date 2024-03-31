@@ -1,0 +1,86 @@
+
+<div class="container theme-showcase" role="main">
+
+	<div class="page-header">
+		<h1 ng-if="!isDisabled">Create Query</h1>
+	</div>
+	<div class="page-header">
+		<h1 ng-if="isDisabled">Query Details</h1>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+	<form name="createQueryForm" autocomplete="off" novalidate>
+
+
+
+
+
+		<div class="form-group row">
+
+			<label for="customerName" class="col-sm-1">Query Id:</label> <input
+				type="text" class="form-control col-sm-2" style="width: 20%;"
+				placeholder="Customer Name" name="customerName" id="customerName"
+				data-validation="length alphanumeric" ng-model="queryModel.queryId"
+				ng-disabled="true">
+
+
+			<label for="customerContact" class="col-sm-1">Customer
+				Contact:</label> <input type="tel" class="form-control col-sm-2"
+										style="width: 20%;" placeholder="Customer Contact"
+										name="customerContact" id="customerContact"
+										data-validation="length alphanumeric"
+										ng-model="queryModel.contact" ng-disabled="isDisabled"
+										ng-pattern="/^[0-9]*$/" ng-minlength="10" ng-maxlength="10"/>
+			<label for="customerName" class="col-sm-1">Customer Name:</label> <input
+				type="text" class="form-control col-sm-2" style="width: 20%;"
+				placeholder="Customer Name" name="customerName" id="customerName"
+				data-validation="length alphanumeric" ng-model="queryModel.name"
+				ng-disabled="isDisabled" required ng-pattern="/^[a-zA-Z. ]*$/">
+
+		</div>
+
+
+
+
+		<div class="form-group row">
+			<label for="productType" class="col-sm-2">Reason:</label>
+			<textarea ng-disabled="isDisabled"
+
+					  ng-model="queryModel.reason"
+					  class="form-control col-sm-10" style="width: auto;"></textarea>
+		</div>
+
+		<div class="form-group row"
+		>
+			<label for="productType" class="col-sm-2">Created By:</label>
+			<input type="text" ng-disabled="isDisabled"  ng-model="queryModel.createdBy"
+				   class="form-control col-sm-2" style="width: auto;">
+		</div>
+
+
+
+		<button ng-if="!isDisabled"
+				id="editOrderBtn" type="button" class="btn btn btn-primary col-sm-1"
+				style="width: auto" ;
+				ng-click="createQuery(queryModel)"
+				ng-disabled="createQueryForm.$invalid"font-weight:bold;">Create
+		Query</button>
+
+
+		<br/>
+
+		<a ng-if="isDisabled" href="#createQuery.html">Back To Home</a>
+	</form>
+
+	<a href="https://api.whatsapp.com/send?phone=%2B91{{queryModel.contact}}&&text=अमर%20ओप्टिकल्स%20से%20ख़रीदी%20करने%20के%20लिए%20आपका%20धन्यवाद%20%20हमें%20उम्मीद%20है%20आपको%20हमारी%20सुविधाएँ%20पसंद%20आयी%20होगी%20आगे%20के%20offer%20व%20update%20के%20लिए%20कृपया%20यह%20नंबर%20save%20करें%20Thank%20you%20for%20choosing%20AMAR%20OPTICALS%20Korba%20hope%20you%20enjoy%20the%20services%20for%20new%20offer%20and%20update%20kindly%20save%20this%20number">Whatsapp status</a>
+
+</div>
