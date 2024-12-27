@@ -4,6 +4,17 @@ public class AddOrUpdateStockRequest {
 	
 	private int productId;
 	private int quantityChange;
+
+	private int displayQty;
+
+	public int getDisplayQty() {
+		return displayQty;
+	}
+
+	public void setDisplayQty(int displayQty) {
+		this.displayQty = displayQty;
+	}
+
 	private String reason;
 	private String refId;
 	private String updateDate;

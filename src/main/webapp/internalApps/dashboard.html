@@ -90,7 +90,12 @@
 					<ul class="dropdown-menu">
 						<li><a href="#/createQuery">Create Query</a></li>
 						<li><a href="#/searchQuery">Search Query</a></li>
-
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+										data-toggle="dropdown" role="button" aria-haspopup="true"
+										aria-expanded="false">Recon<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#/addRecon">Add Recon</a></li>
 					</ul></li>
 
 				<li ng-if="admin" class="dropdown"><a href="#" class="dropdown-toggle"
@@ -213,6 +218,10 @@
                templateUrl: 'sendReport.html',
                controller: 'ReportsController'
             }).
+            when('/addRecon', {
+               templateUrl: 'addRecon.html',
+               controller: 'AddReconController'
+            }).
          otherwise({
           redirectTo: '/login'
        });
@@ -247,6 +256,91 @@
                $scope.paymentModeList.push("Cash");
                 $scope.paymentModeList.push("Card");
                  $scope.paymentModeList.push("Other");
+                  $scope.powerRefList = [];
+                  for (var i = -20; i <= 20; i += 0.25) {
+
+                      if (i> 0) {
+                           $scope.powerRefList.push("+"+i.toFixed(2));
+                      } else {
+
+                      $scope.powerRefList.push(i.toFixed(2));
+                      }
+                      }
+
+                   $scope.powerRefCylList = [];
+                  for (var i = -6; i <= 6; i += 0.25) {
+
+                    if (i> 0) {
+                           $scope.powerRefCylList.push("+"+i.toFixed(2));
+                      } else {
+
+                      $scope.powerRefCylList.push(i.toFixed(2));
+                      }
+
+                  }
+
+                    $scope.powerRefNearSphList = [];
+                  for (var i = 0.75; i <= 4; i += 0.25) {
+
+
+                       if (i> 0) {
+                           $scope.powerRefNearSphList.push("+"+i.toFixed(2));
+                      } else {
+
+                      $scope.powerRefNearSphList.push(i.toFixed(2));
+                      }
+
+                  }
+
+
+                  $scope.lensCategoryList = [];
+                  $scope.lensCategoryList.push(".");
+                  $scope.lensCategoryList.push("S.V.");
+                  $scope.lensCategoryList.push("Bi-Fo");
+                  $scope.lensCategoryList.push("Prog");
+
+
+                  $scope.primaryCoatingList = [];
+                  $scope.primaryCoatingList.push(".");
+                  $scope.primaryCoatingList.push("White");
+                  $scope.primaryCoatingList.push("Solar");
+                  $scope.primaryCoatingList.push("Super");
+                  $scope.primaryCoatingList.push("BlueCut");
+                  $scope.primaryCoatingList.push("Tint");
+
+                  $scope.secCoatingList = [];
+                  $scope.secCoatingList.push(".");
+                  $scope.secCoatingList.push("Solar");
+                  $scope.secCoatingList.push("Super");
+                  $scope.secCoatingList.push("Bluecut");
+                  $scope.secCoatingList.push("DualCoat");
+                  $scope.secCoatingList.push("BlueCoat");
+                  $scope.secCoatingList.push("NightVision");
+
+                   $scope.brandNamesList = [];
+                  $scope.brandNamesList.push(".");
+                  $scope.brandNamesList.push("Aura vision");
+                  $scope.brandNamesList.push("Asahi-lite");
+                  $scope.brandNamesList.push("ASL");
+                  $scope.brandNamesList.push("Revo");
+                  $scope.brandNamesList.push("R.V.");
+                  $scope.brandNamesList.push("Crizal");
+                  $scope.brandNamesList.push("C.Z.");
+                  $scope.brandNamesList.push("ESS");
+                  $scope.brandNamesList.push("Essilor");
+                  $scope.brandNamesList.push("Yash lustra");
+                  $scope.brandNamesList.push("Y.H. LUS");
+                  $scope.brandNamesList.push("Nova");
+                  $scope.brandNamesList.push("N.V.");
+                  $scope.brandNamesList.push("satin");
+                  $scope.brandNamesList.push("S.T.");
+                  $scope.brandNamesList.push("Sigma");
+                  $scope.brandNamesList.push("S.G.");
+
+
+
+
+
        $scope.invoiceModel = {
                 name: null,
                 contact: null,
@@ -392,11 +486,33 @@ $scope.calculatePendingAmount = function(initialAmount) {
 
       $scope.lensModel = {"lensActive": true,
               "leftEye": [],
-              "rightEye": []
+              "rightEye": [],
+              "lensCategory": "",
+              "primaryCoating": "",
+              "secCoating":"",
+             "brandName":""
       };
 
       $scope.pushToList = function(purchaseModel)
-      {
+      {    if (purchaseModel.lensCategory==='') {
+          alert("Lens Category cannot be empty");
+          return;
+      }
+
+         if (purchaseModel.primaryCoating==='') {
+          alert("Primary Coating cannot be empty");
+          return;
+      }
+         if (purchaseModel.secCoating==='') {
+          alert("Sec Coating cannot be empty");
+          return;
+      }
+
+      if (purchaseModel.brandName==='') {
+          alert("Brand Name cannot be empty");
+          return;
+      }
+
           $scope.invoiceModel.purchaseItems.push(purchaseModel);
           $scope.lensRecordExists= true;
           $scope.lensModel = {"lensActive": true,
@@ -408,6 +524,14 @@ $scope.calculatePendingAmount = function(initialAmount) {
       $scope.deleteItem = function(index) {
           $scope.invoiceModel.purchaseItems.splice(index, 1);
       };
+
+
+     $scope.populateLensName = function() {
+         $scope.lensModel.productName = $scope.lensModel.lensCategory+"/"+
+         $scope.lensModel.primaryCoating+"/"+
+         $scope.lensModel.secCoating+"/"+ $scope.lensModel.brandName;
+
+     }
 
       $scope.isDisabled = false;
 
@@ -833,7 +957,7 @@ $scope.datePicker = {
 
 
                  window.open("https://api.whatsapp.com/send?phone=%2B91"+
-                 response.contact+"&&text=Dear%20"+response.name+",%20your%20order%20number%20"+response.invoiceId +"%20is%20ready%20for%20pickup%20Thankyou%20for%20choosing%20*AMAR%20OPTICALS%20Korba*%20ЁЯЩПрдирдорд╕реНрдХрд╛рд░%20рдЖрдкрдХрд╛%20рдСрд░реНрдбрд░%20рдкрд┐рдХрдЕрдк%20рдХреЗ%20рд▓рд┐рдП%20рддреИрдпрд╛рд░%20рд╣реИ,%20*рдЕрдорд░%20рдСрдкреНрдЯрд┐рдХрд▓реНрд╕%20рдХреЛрд░рдмрд╛*%20рдЪреБрдирдиреЗ%20рдХреЗ%20рд▓рд┐рдП%20рдзрдиреНрдпрд╡рд╛рдж%20ЁЯЩПPickup%20time%2012noon-9pm%20Tuesday%20closed");
+                 response.contact+"&&text=Dear%20"+response.name+",%20your%20order%20number%20"+response.invoiceId +"%20is%20ready%20for%20pickup%20Thankyou%20for%20choosing%20*AMAR%20OPTICALS%20Korba*%20ЁЯЩП%20рдирдорд╕реНрдХрд╛рд░%20рдЖрдкрдХрд╛%20рдСрд░реНрдбрд░%20рдкрд┐рдХрдЕрдк%20рдХреЗ%20рд▓рд┐рдП%20рддреИрдпрд╛рд░%20рд╣реИ%20*рдЕрдорд░%20рдСрдкреНрдЯрд┐рдХрд▓реНрд╕%20рдХреЛрд░рдмрд╛*%20рдХреЛ%20рдЪреБрдирдиреЗ%20рдХреЗ%20рд▓рд┐рдП%20рдзрдиреНрдпрд╡рд╛рдж%20ЁЯЩП%20Pickup%20time%2012noon-9pm%20Tuesday%20closed");
 
 
                        }).error(function(error, status){
@@ -1303,6 +1427,116 @@ $scope.datePicker = {
 
        });
 
+
+   mainApp.controller('AddReconController', function($scope, $http,
+               $routeParams, $location, $localstorage, $rootScope) {
+       $scope.productTypes = [];
+$scope.productName = "";
+
+       $http({method : "GET",
+             url :"/stocks/getStocksType",
+
+             headers : {
+              'Content-Type' : 'application/json',
+              'token' :$localstorage.get("token", "")
+             }
+             }
+             ).success(function (response) {
+
+
+               // if (response.statusMessage == 'success') {
+                 $scope.productTypes = response;
+              //   $('#successMsg').text("Number of orders found:"+ response.orders.length);
+              //   $('#successMsg').show();
+               //  }
+
+             }).error(function(error, status){
+
+                  //   $('#errorMsg').show();
+             });
+
+
+
+
+       $scope.showLensStock = false;
+
+       $scope.loadStocksByType = function(type) {
+
+       $http({method : "GET",
+           url :"/stocks/getStocksbyType/"+type,
+
+           headers : {
+            'Content-Type' : 'application/json' ,
+            'token' :$localstorage.get("token", "")
+           }
+           }
+           ).success(function (response) {
+
+
+             // if (response.statusMessage == 'success') {
+               $scope.stocks = response.stockModelList;
+            //   $('#successMsg').text("Number of orders found:"+ response.orders.length);
+            //   $('#successMsg').show();
+             //  }
+
+           });
+        }
+   $scope.reconModel = {
+
+                reconModelList: [],
+                user:$localstorage.set("name", "")
+            };
+
+
+  $scope.pushToList = function(ind) {
+   		var invoiceModel = {
+                productId: ind.productId,
+                productCode : ind.code,
+                reconDateTime : null,
+            	reconQty: 0,
+   			 	displayQty: ind.displayQty,
+   			  	diff:0
+
+            };
+           ind.reconQty=0;
+           $scope.reconModel.reconModelList.push(invoiceModel);
+       };
+		$scope.isDisabled = false;
+       $scope.deleteItem = function(index) {
+          $scope.reconModel.reconModelList.splice(index, 1);
+      };
+
+
+ $scope.submitReconList = function(reconModel) {
+           $http({method : "POST",
+                   url :"/recon/addReconRecord",
+                   data : reconModel,
+
+                   headers : {
+                    'Content-Type' : 'application/json' ,
+                    'token' :$localstorage.get("token", "")
+                   }
+                   }
+                   ).success(function (response) {
+                    $scope.isDisabled = true;
+                  //  $scope.reconModel = response;
+
+                       $scope.reconModel = response.response;
+
+
+                   }).error(function(error, status){
+
+                        //   $('#errorMsg').show();
+                   });
+
+
+       }
+
+
+
+
+
+       });
 
 
        mainApp.factory('$localstorage', [ '$window', function($window) {

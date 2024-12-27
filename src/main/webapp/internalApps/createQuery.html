@@ -26,25 +26,32 @@
 
 		<div class="form-group row">
 
-			<label for="customerName" class="col-sm-1">Query Id:</label> <input
+			<label for="Query id" class="col-sm-1">Query Id:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
-				placeholder="Customer Name" name="customerName" id="customerName"
+				placeholder="Qurey id" name="Query id" id="Query id"
 				data-validation="length alphanumeric" ng-model="queryModel.queryId"
 				ng-disabled="true">
 
+			<a href="https://api.whatsapp.com/send?phone=%2B91{{queryModel.contact}}&&text=अमर%20ओप्टिकल्स%20से%20ख़रीदी%20करने%20के%20लिए%20आपका%20धन्यवाद%20%20हमें%20उम्मीद%20है%20आपको%20हमारी%20सुविधाएँ%20पसंद%20आयी%20होगी%20आगे%20के%20offer%20व%20update%20के%20लिए%20कृपया%20यह%20नंबर%20save%20करें%20Thank%20you%20for%20choosing%20AMAR%20OPTICALS%20Korba%20hope%20you%20enjoy%20the%20services%20for%20new%20offer%20and%20update%20kindly%20save%20this%20number"> <button type="button">Whatsapp</button></a>
 
-			<label for="customerContact" class="col-sm-1">Customer
+			<label for="customerContact" class="col-sm-2">Customer
 				Contact:</label> <input type="tel" class="form-control col-sm-2"
 										style="width: 20%;" placeholder="Customer Contact"
-										name="customerContact" id="customerContact"
+										name="customerContact" id="customerContact" Required
 										data-validation="length alphanumeric"
 										ng-model="queryModel.contact" ng-disabled="isDisabled"
 										ng-pattern="/^[0-9]*$/" ng-minlength="10" ng-maxlength="10"/>
-			<label for="customerName" class="col-sm-1">Customer Name:</label> <input
+		</div>
+
+
+
+
+		<div class="form-group row">
+			<label for="customerName" class="col-sm-2">Customer Name:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Customer Name" name="customerName" id="customerName"
 				data-validation="length alphanumeric" ng-model="queryModel.name"
-				ng-disabled="isDisabled"  ng-pattern="/^[a-zA-Z. ]*$/">
+				ng-disabled="isDisabled" ng-pattern="/^[a-zA-Z. ]*$/">
 
 		</div>
 
@@ -53,7 +60,7 @@
 
 		<div class="form-group row">
 			<label for="productType" class="col-sm-2">Reason:</label>
-			<textarea ng-disabled="isDisabled"
+			<textarea ng-disabled="isDisabled" Required
 
 					  ng-model="queryModel.reason"
 					  class="form-control col-sm-10" style="width: auto;"></textarea>

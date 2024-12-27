@@ -8,8 +8,19 @@ public class StockModel extends CommonResponseModel {
 	private String productType;
 	private String productSubType;
 	private String productName;
+
+	public int getDisplayQty() {
+		return displayQty;
+	}
+
+	public void setDisplayQty(int displayQty) {
+		this.displayQty = displayQty;
+	}
+
 	private String productDesc;
 	private int quantity;
+
+	private int displayQty;
 	private String updateDate;
 	private String code;
 	private String jsonFileName;

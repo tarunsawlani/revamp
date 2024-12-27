@@ -127,14 +127,15 @@ public class StockController {
 		StockModel model = (StockModel) JSONFileHandler.readJsonFile(stockPath, "", request.getProductId() + ".json",
 				StockModel.class);
 
-		String sql = "UPDATE opticals_stocks SET product_qty= ? ,update_timestamp=?  WHERE product_id=?";
-		stocksDAO.addOrUpdateStocks(sql, model.getQuantity() + request.getQuantityChange(),
+		String sql = "UPDATE opticals_stocks SET product_qty= ?, display_qty=? ,update_timestamp=?  WHERE product_id=?";
+		stocksDAO.addOrUpdateStocks(sql, model.getQuantity() + request.getQuantityChange(), request.getDisplayQty(),
 				Timestamp.valueOf(LocalDateTime.now()), request.getProductId());
 
 		model.setQuantity(model.getQuantity() + request.getQuantityChange());
 		StockLogModel log = new StockLogModel();
 		log.setQuantityChange(request.getQuantityChange());
 		log.setReason(request.getReason());
+		log.setDisplayQty(request.getDisplayQty());
 		log.setRefId(request.getRefId());
 		log.setUpdateDate(String.valueOf(Timestamp.valueOf(LocalDateTime.now())));
 		log.setUser(request.getUser());

@@ -2,6 +2,8 @@ package com.amaropticals.model;
 
 public class StockLogModel {
 	private int quantityChange;
+
+	private int displayQty;
 	private String reason;
 	private String refId;
 	private String updateDate;
@@ -33,8 +35,19 @@ public class StockLogModel {
 	public String getUser() {
 		return user;
 	}
+
+	public int getDisplayQty() {
+		return displayQty;
+	}
+
+	public void setDisplayQty(int displayQty) {
+		this.displayQty = displayQty;
+	}
+
 	public void setUser(String user) {
 		this.user = user;
 	}
+
+
 }
 

@@ -1,9 +1,7 @@
 package com.amaropticals.common;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -20,14 +18,11 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.xml.transform.TransformerException;
 
-import com.amaropticals.model.QueryModel;
-import com.amaropticals.model.TransactionModel;
+import com.amaropticals.model.*;
 import org.apache.fop.apps.FOPException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.amaropticals.model.CreateInvoiceRequest;
-import com.amaropticals.model.ReportModel;
 import com.sun.istack.ByteArrayDataSource;
 
 public class MailUtils {
@@ -170,6 +165,36 @@ public class MailUtils {
 				messageBody.append("\nentered by:"+ queryModel.getCreatedBy());
 				messageBody.append("\n time :"+ queryModel.getUpdateTime());
 
+				BodyPart messageBodyPart1 = new MimeBodyPart();
+				messageBodyPart1.setText(messageBody.toString());
+
+				// 4) create new MimeBodyPart object and set DataHandler object to this object
+
+				// 5) create Multipart object and add MimeBodyPart objects to this object
+
+				multipart.addBodyPart(messageBodyPart1);
+
+			}else if(request[0] instanceof List && ((List)request[0]).get(0) instanceof ReconModel) {
+
+				List<ReconModel> reconModelList = (List<ReconModel>) request[0];
+				message.setFrom(new InternetAddress(user));
+				message.addRecipient(Message.RecipientType.TO, new InternetAddress(toAddress));
+				message.setSubject(subject);
+				StringBuilder messageBody = new StringBuilder();
+				messageBody.append("LIST OF RECORDS\n ");
+						for (ReconModel reconModel:reconModelList) {
+							messageBody.append("<b>product code:</b>" + reconModel.getProductCode());
+							messageBody.append("\n");
+							messageBody.append("<b>recon qty:</b>" + reconModel.getReconQty());
+							messageBody.append("\n");
+							messageBody.append("<b>diff qty:</b>" + reconModel.getDiff());
+							messageBody.append("\n");
+							messageBody.append("<b>recon time:</b>" + reconModel.getReconDateTime());
+							messageBody.append("\n");
+						}
+
+				messageBody.append("diff qty in -ve = total qty is less than recon qty\n");
+				messageBody.append("diff qty in +ve = total qty is greater than recon qty\n");
 				BodyPart messageBodyPart1 = new MimeBodyPart();
 				messageBodyPart1.setText(messageBody.toString());
 

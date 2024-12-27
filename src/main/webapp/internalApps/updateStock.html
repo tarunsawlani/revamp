@@ -4,7 +4,7 @@
 	<div class="page-header">
 		<h1 ng-if="!isDisabled">Update Stocks</h1>
 	</div>
-<div class="page-header">
+	<div class="page-header">
 		<h1 ng-if="isDisabled">Update Stock Details</h1>
 	</div>
 
@@ -12,137 +12,144 @@
 
 
 
-			<div class="form-group row" ng-if="!isDisabled" >
-		
-			<label for="productType" class="col-sm-1" >Product Type:</label> 
-				<select ng-model="productType"  class="form-control col-sm-2" style="width: 20%;"
-				 ng-options="item for item in productTypes" ng-change="loadStocksByType(productType)"></select>
-				 
-				 </div>
-				<div class="form-group row" ng-if="!isDisabled">
-				
-				
-				 <label
+	<div class="form-group row" ng-if="!isDisabled" >
+
+		<label for="productType" class="col-sm-1" >Product Type:</label>
+		<select ng-model="productType"  class="form-control col-sm-2" style="width: 20%;"
+				ng-options="item for item in productTypes" ng-change="loadStocksByType(productType)"></select>
+
+	</div>
+	<div class="form-group row" ng-if="!isDisabled">
+
+
+		<label
 				for="productName" class="col-sm-1">Product Name:</label> <input
-				type="text" ng-model="productName" class="form-control col-sm-2"
-				style="width: 20%;" placeholder="Product Name" name="productName">
+			type="text" ng-model="productName" class="form-control col-sm-2"
+			style="width: 20%;" placeholder="Product Name" name="productName">
 
 
-			<table class="table table-striped">
-				<thead>
-					<tr ng-if="stocks.length > 0">
-						<th>S.No</th>
-						
-						<th>Product Name</th>
-						<th>Quantity</th>
-						<th>Details</th>
-						
+		<table class="table table-striped">
+			<thead>
+			<tr ng-if="stocks.length > 0">
+				<th>S.No</th>
 
-					</tr>
-				</thead>
+				<th>Product Name</th>
+				<th>Quantity</th>
+				<th>Details</th>
 
-				<tr ng-repeat="stock in stocks| filter:productName">
-					<td>{{ $index+1 }}</td>
-					<td>{{ stock.code }}-{{ stock.productDesc }}</td>
-					<td>{{stock.quantity}}</td>
-						<td>
-						<button id="editOrderBtn" type="button"
+
+			</tr>
+			</thead>
+
+			<tr ng-repeat="stock in stocks| filter:productName">
+				<td>{{ $index+1 }}</td>
+				<td>{{ stock.code }}-{{ stock.productDesc }}</td>
+				<td>{{stock.quantity}}</td>
+				<td>
+					<button id="editOrderBtn" type="button"
 							class="btn btn btn-primary col-sm-1" style="width: auto"; font-weight:bold;" ng-click="viewStockDetails(stock.productId, 'lg')">View Details</button>
-					</td>
-						<td>
-						<button id="editOrderBtn" type="button"
+				</td>
+				<td>
+					<button id="editOrderBtn" type="button"
 							class="btn btn btn-primary col-sm-1" style="width: auto"; font-weight:bold;" ng-click="pushToEdit(stock)">Edit</button>
-					</td>
-				
-					
+				</td>
 
-				</tr>
-			</table>
-		</div>
-		
-	
-<form name="updateStockForm" autocomplete="off" novalidate>
+
+
+			</tr>
+		</table>
+	</div>
+
+
+	<form name="updateStockForm" autocomplete="off" novalidate>
 
 		<div class="form-group row" >
 
 			<label for="productId" class="col-sm-1">Product Id:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Product Id" name="customerName" id="productId"
-				data-validation="length alphanumeric" ng-model="stockModel.productId" required ng-disabled="true" ng-pattern="/^[0-9]*$/"> 
-				<label
-				for="productType" class="col-sm-1">Product Type:</label> <input
+				data-validation="length alphanumeric" ng-model="stockModel.productId" required ng-disabled="true" ng-pattern="/^[0-9]*$/">
+			<label
+					for="productType" class="col-sm-1">Product Type:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Product Type" name="productType"
 				id="customerContact" data-validation="length alphanumeric" ng-model="stockModel.productType"required ng-disabled="true"/>
 			<label
-				for="productSubType" class="col-sm-1">Product Sub Type:</label> <input
+					for="productSubType" class="col-sm-1">Product Sub Type:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Product Sub Type" name="productSubType"
 				id="productSubType" data-validation="length alphanumeric" ng-model="stockModel.productSubType" required ng-disabled="true"/>
-			</div>
-			<div class="form-group row" >
+		</div>
+		<div class="form-group row" >
 			<label
-				for="productDesc" class="col-sm-1">Product Description:</label> <input
+					for="productDesc" class="col-sm-1">Product Description:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Product Desc" name="productDesc"
 				id="productDesc" data-validation="length alphanumeric" ng-model="stockModel.productDesc"required ng-disabled="true"/>
-				<label
-				for="productCode" class="col-sm-1">Box Code:</label> <input
+			<label
+					for="productCode" class="col-sm-1">Box Code:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Product Code" name="productCode"
-				id="productCode" data-validation="length alphanumeric" ng-model="stockModel.code" 
-			required ng-disabled="true" />
-			
+				id="productCode" data-validation="length alphanumeric" ng-model="stockModel.code"
+				required ng-disabled="true" />
+
 			<label
-				for="productName" class="col-sm-1">Product Name:</label> <input
+					for="productName" class="col-sm-1">Product Name:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Product Name" name="productName"
 				id="productName" data-validation="length alphanumeric" ng-model="stockModel.productName"
-			required ng-disabled="true"/>
-			</div>
-			<div class="form-group row" >
+				required ng-disabled="true"/>
+		</div>
+		<div class="form-group row" >
 			<label
-				for="productQty" class="col-sm-1">Current Quantity:</label> <input
+					for="productQty" class="col-sm-1">Current Quantity:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Product Quantity" name="productQty"
-				id="productQty" data-validation="length alphanumeric" ng-model="stockModel.quantity" 
-				
-			required ng-disabled="true"/>
-			
+				id="productQty" data-validation="length alphanumeric" ng-model="stockModel.quantity"
+
+				required ng-disabled="true"/>
+
 			<label
-				for="productQty" class="col-sm-1">Add Quantity:</label> <input
+					for="productQty" class="col-sm-1">Add Quantity:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Product Quantity" name="productQty"
-				id="productQty" data-validation="length alphanumeric" ng-model="stockModel.quantityChange" 
-				
-			required ng-disabled="isDisabled"/>
+				id="productQty" data-validation="length alphanumeric" ng-model="stockModel.quantityChange"
+
+				required ng-disabled="isDisabled"/>
 			<label
-				for="productQty" class="col-sm-1">Reference Id:</label> <input
+					for="productQty" class="col-sm-1">Display Quantity:</label> <input
+				type="text" class="form-control col-sm-2" style="width: 20%;"
+				placeholder="Display Quantity" name="displayQty"
+				id="productQty" data-validation="length alphanumeric" ng-model="stockModel.displayQty"
+
+				required ng-disabled="isDisabled"/>
+			<label
+					for="productQty" class="col-sm-1">Reference Id:</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Product Quantity" name="productQty"
 				id="productQty" data-validation="length alphanumeric" ng-model="stockModel.refId" ng-disabled="isDisabled"
-				
-			required/>
-			</div>
-			<div class="form-group row" >
-				<label
-				for="reason" class="col-sm-1">Reason :</label> <input
+
+				required/>
+		</div>
+		<div class="form-group row" >
+			<label
+					for="reason" class="col-sm-1">Reason :</label> <input
 				type="text" class="form-control col-sm-2" style="width: 20%;"
 				placeholder="Product Quantity" name="reason"
 				id="reason" data-validation="length alphanumeric" ng-model="stockModel.reason" ng-disabled="isDisabled"
-				
-			required/>
-				
+
+				required/>
+
 		</div>
-		</div>
-				
-  <button ng-if="!isDisabled" id="editOrderBtn" type="button" class="btn btn btn-primary col-sm-1" style="width:auto";
-   ng-click="updateStock(stockModel)"
-   ng-disabled="updateStockForm.$invalid"
-   font-weight:bold;">Update Stock</button>
-   <a ng-if="isDisabled" 
-   	href="#createInvoice.html"
-   >Back To Home</a>
-	</form>
+</div>
+
+<button ng-if="!isDisabled" id="editOrderBtn" type="button" class="btn btn btn-primary col-sm-1" style="width:auto";
+		ng-click="updateStock(stockModel)"
+		ng-disabled="updateStockForm.$invalid"
+		font-weight:bold;">Update Stock</button>
+<a ng-if="isDisabled"
+   href="#createInvoice.html"
+>Back To Home</a>
+</form>
 
 </div>

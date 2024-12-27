@@ -21,6 +21,7 @@ public class StockModelMapper implements RowMapper<StockModel> {
 		model.setUpdateDate(String.valueOf(rs.getTimestamp("update_timestamp")));
 		model.setCode(rs.getString("product_code"));
 		model.setJsonFileName(rs.getString("json_file_name"));
+		model.setDisplayQty(rs.getInt("display_qty"));
 		return model;
 	}
 

@@ -1,0 +1,117 @@
+
+<div class="container theme-showcase" role="main">
+
+	<div class="page-header">
+		<h1 ng-if="!isDisabled">Add Recon</h1>
+	</div>
+	<div class="page-header">
+		<h1 ng-if="isDisabled">Recon Details</h1>
+	</div>
+
+
+
+	<div class="form-group row align-items-center" ng-if="!isDisabled">
+
+		<label for="productType" class="col-sm-2">Product Type:</label> <select
+			ng-model="productType" class="form-control col-sm-2"
+			style="width: 20%;" ng-options="item for item in productTypes"
+			ng-change="loadStocksByType(productType)"></select>
+	</div>
+
+
+
+
+	<div class="form-group row" ng-if="!isDisabled">
+		<label for="productName" class="col-sm-2">Product Name:</label> <input
+			type="text" ng-model="productName" class="form-control col-sm-2"
+			style="width: 20%;" placeholder="Product Name" name="productName">
+
+		<table class="table table-striped">
+			<thead>
+			<tr ng-if="stocks.length > 0">
+				<th>S.No</th>
+
+				<th>Product Code</th>
+				<th>Product Name</th>
+
+
+			</tr>
+			</thead>
+
+			<tr ng-repeat="stock in stocks| filter:{productDesc : productName}">
+				<td>{{ $index+1 }}</td>
+				<td>{{ stock.code }}</td>
+				<td>{{ stock.productDesc }}</td>
+				<td>
+					<button id="editOrderBtn" type="button"
+							class="btn btn btn-primary col-sm-1" style="width: auto"
+							; font-weight:bold;" ng-click="pushToList(stock)" >Add</button>
+				</td>
+
+
+			</tr>
+		</table>
+	</div>
+
+	<table class="table table-striped">
+		<h1 ng-if="reconModel.reconModelList.length > 0">Recon
+			Items</h1>
+
+
+		<thead>
+		<tr ng-if="reconModel.reconModelList.length > 0">
+			<th>S.No</th>
+
+			<th>Product Name</th>
+			<th ng-if="admin">Display Qty</th>
+			<th>Recon Qty</th>
+			<th>Match?</th>
+		</tr>
+		</thead>
+		<tbody>
+
+		<tr ng-repeat="x in reconModel.reconModelList">
+
+			<td>{{ $index+1 }}</td>
+
+			<td>{{ x.productCode}}</td>
+
+			<td ng-if="admin">{{x.displayQty}}</td>
+			<td><input type="tel" class="form-control col-sm-1"
+					   style="width: auto;" value="" name="customerContact"
+					   ng-model="x.reconQty" id="customerContact"
+					   ng-disabled="isDisabled"
+					   required ng-pattern="/^[0-9]*$/" /></td>
+
+
+
+			<td ng-if="x.diff === 0 && !isDisabled" style="color:grey;"
+			>NNot SUBMITTED</td>
+			<td ng-if="x.diff === 0 && isDisabled" style="color:green;"
+			>MATCHED</td>
+			<td ng-if="x.diff != 0 && isDisabled" style="color:red;"
+			>NOT MATCHED</td>
+
+
+			<td ng-if="!isDisabled">
+				<button id="sendSMSBtn" type="button"
+						class="btn btn btn-danger col-sm-1" style="width: auto;"
+						ng-click="deleteItem(reconModel.reconModelList.indexOf(x))" >Delete
+				</button>
+			</td>
+		</tr>
+
+		</tbody>
+	</table>
+
+
+
+
+
+	<button ng-if="!isDisabled && reconModel.reconModelList.length > 0"
+			id="editOrderBtn" type="button" class="btn btn btn-primary col-sm-1"
+			style="width: auto" ;
+			ng-click="submitReconList(reconModel)"
+	>Submit</button>
+
+</div>
